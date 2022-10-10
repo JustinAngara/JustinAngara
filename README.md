@@ -4,7 +4,7 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Front-end Developer
 -------------------
 
-I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. Currently, I am a Junior in High School and will be the "AP Computer Science A" Teacher's assistant! As well, I am a student in a front-end coding BootCamp.
+I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. Currently, I'm a graduate from a coding bootcamp, AP Computer Science Teacher Assistant, Intern at a tech start up
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
