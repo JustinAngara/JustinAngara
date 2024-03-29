@@ -4,7 +4,7 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Software Developer
 -------------------
 
-I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. Currently, I'm a graduate from a coding bootcamp, AP Computer Science teacher assistant, code club captain, Intern at a tech start up. Some background knowledge of me, I was a competitor for two hackathons, attended a front-end developer course at Elgin Community College, TJ Maxx employee, and tutor for math & computer science.    
+I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. Currently, I'm a graduate from a coding bootcamp, AP Computer Science teacher assistant, code club captain, Intern at a tech start up. Some background knowledge of me, I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension, and am a tutor for math & computer science.    
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
