@@ -1,10 +1,10 @@
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Justin Angara
 =====================================================================================================================================
 
-Software Developer
+Software Developer | Computer Science Student @ University of Wisconsin-Madison 
 -------------------
 
-I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. Currently, I'm a graduate from a coding bootcamp, AP Computer Science teacher assistant, code club captain, Intern at a tech start up. Some background knowledge of me, I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension, and am a tutor for math & computer science.    
+I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. I'm a graduate from a coding boot camp, a former AP Computer Science teacher assistant, a code club captain, and an intern at a tech start-up. Some background knowledge: I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension & UCLA Extension, and am a math & computer science tutor.    
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
