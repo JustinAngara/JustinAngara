@@ -45,8 +45,3 @@ I've been coding since I was 13 with Java and self-studied for a year. I took AP
 
 
 
-
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/https://www.linkedin.com/in/justinangara/) [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:justin.angara@gmail.com) 
-
-
