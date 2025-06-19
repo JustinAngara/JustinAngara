@@ -8,7 +8,7 @@ I've been coding since I was 13 with Java and self-studied for a year. I took AP
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
-* 🧠  I'm learning React, JavaScript, HTML, CSS, Bootstrap, CRUD, and more!
+* 🧠  I'm learning C/C++, the kernel, and more!
 
 ### Skills
 
