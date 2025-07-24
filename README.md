@@ -4,7 +4,7 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Software Developer | Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 -------------------
 
-I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. I'm a graduate from a coding boot camp, a former AP Computer Science teacher assistant, a code club captain, and an intern at a tech start-up. Some background knowledge: I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension & UCLA Extension, and am a math & computer science tutor. Now I work at a different startup, still working on coding projects, and exploring different avenues.     
+I've been coding since I was 13 with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. I'm a graduate from a coding boot camp, a former AP Computer Science teacher assistant, a code club captain, and an intern at a tech start-up. Some background knowledge: I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension & UCLA Extension, and am a math & computer science tutor. Now I work at a different startup, contracting for a telecom industryclient, still working on coding projects, and exploring different avenues.     
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
