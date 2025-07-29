@@ -6,11 +6,16 @@ Software Developer | Double major in Computer Science and Economics Student @ Un
 
 I've been coding since I was 13 (2019) with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
 
-I'm a graduate from a coding boot camp, a former AP Computer Science teacher assistant, a code club captain, and an intern at a tech start-up. 
+High School
+---
+I'm a graduate from a coding boot camp, a former AP Computer Science teacher assistant, a code club captain, and an former intern at Comet. 
 
-Some background knowledge: I was a competitor for multiple hackathons, attended a front-end developer course at Elgin Community College, took some classes on back-end development at UC Berkeley Extension & UCLA Extension, and was a Math & Computer Science tutor. 
 
-Now I work at a different startup, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
+Some background knowledge: I was a competitor for multiple hackathons, took some classes on front-end/back-end development at UC Berkeley Extension & UCLA Extension, and was a former AVID, Math, and Computer Science tutor. 
+
+---
+### Present
+Now I work at a different startup, AI & Prototyping Engineer, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
 
 * 🌍  I'm based in Illinois
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
