@@ -17,9 +17,9 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 ### Present (University of Wisconsin-Madison)
 Now I work at a different startup, AI & Prototyping Engineer, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
 
-* 🌍  I'm based in Illinois
-* ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com)
-* 🧠  I'm learning C/C++, the kernel, and more!
+* 🌍  I'm based in Illinois (Chicago) / Wisconsin (Madison)
+* ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com) or [jangara@wisc.edu](mailto:jangara@wisc.edu) 
+* 🧠  I'm learning new technologies, C/C++, the kernel, and more!
 
 ### Skills
 
