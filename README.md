@@ -4,7 +4,8 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 Software Developer | Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 -------------------
 
-I've been coding since I was 13 (2019) with Java and self-studied for a year. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
+I've been coding since I was 13 (2019) with Java and self-studied for 2 years. I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
+This was the first time I have recieved formal instruction. 
 
 ### Present (University of Wisconsin-Madison)
 Now I work at a different startup, AI & Prototyping Engineer, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
