@@ -21,6 +21,7 @@ I'm a graduate from a coding boot camp, a former AP Computer Science teacher ass
 
 Some background knowledge: I was a competitor for multiple hackathons, took some classes on front-end/back-end development at UC Berkeley Extension & UCLA Extension, and was a former AVID, Math, and Computer Science tutor. 
 
+![](https://komarev.com/ghpvc/?username=justinangara)
 
 ### Skills
 
