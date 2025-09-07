@@ -1,6 +1,10 @@
 Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Justin Angara
 =====================================================================================================================================
 
+---
+![](https://komarev.com/ghpvc/?username=justinangara)
+---
+
 Software Developer | Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 -------------------
 
@@ -21,9 +25,6 @@ I'm a graduate from a coding boot camp, a former AP Computer Science teacher ass
 
 Some background knowledge: I was a competitor for multiple hackathons, took some classes on front-end/back-end development at UC Berkeley Extension & UCLA Extension, and was a former AVID, Math, and Computer Science tutor. 
 
----
-![](https://komarev.com/ghpvc/?username=justinangara)
----
 ### Skills
 
 <p align="left">
