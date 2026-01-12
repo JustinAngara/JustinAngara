@@ -3,7 +3,7 @@ Justin Angara
 
 Software Developer | Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 -------------------
-
+https://komarev.com/ghpvc/?username=justinangara
 I've been coding since I was 13 (2019) with Java and self-studied for 2 years (though my first program ever made was back in 2015). I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
 This was the first time I have recieved formal instruction. 
 
