@@ -1,12 +1,15 @@
 Justin Angara
 =====================================================================================================================================
 
-Software Developer 
+# Software Developer 
+
 Systems    -> c/c++ windows, java
+
 Security   -> Ghidra, IDA (someone give me pro), Cheat Engine, Win32 API
+
 Full Stack -> ReactJS, Springboot, (No)SQL Practices
-| Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
--------------------
+
+# Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 
 ---
 ![](https://komarev.com/ghpvc/?username=justinangara)
