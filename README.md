@@ -1,7 +1,11 @@
 Justin Angara
 =====================================================================================================================================
 
-Software Developer | Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
+Software Developer 
+Systems    -> c/c++ windows, java
+Security   -> Ghidra, IDA (someone give me pro), Cheat Engine, Win32 API
+Full Stack -> ReactJS, Springboot, (No)SQL Practices
+| Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 -------------------
 
 ---
@@ -9,14 +13,13 @@ Software Developer | Double major in Computer Science and Economics Student @ Un
 ---
 
 I've been coding since I was 13 (2019) with Java and self-studied for 2 years (though my first program ever made was back in 2015 p.s. check out my first minecraft mod somewhere in my repos!). I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
-This was the first time I have recieved formal instruction. 
+This was the first time I had received formal instruction. 
 
 ### Present (University of Wisconsin-Madison)
 Now I work at a different startup, AI & Prototyping Engineer, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
 
 * 🌍  I'm based in Illinois (Chicago) / Wisconsin (Madison)
 * ✉️  You can contact me at [justin.angara@gmail.com](mailto:justin.angara@gmail.com) or [jangara@wisc.edu](mailto:jangara@wisc.edu) 
-* 🧠  I'm learning new technologies, C/C++, the kernel, and more!
 ---
 High School
 ---
