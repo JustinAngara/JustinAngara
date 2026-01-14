@@ -1,7 +1,6 @@
-Justin Angara
-=====================================================================================================================================
+# Justin Angara
 
-# Software Developer 
+## Software Developer 
 
 Systems    -> c/c++ windows, java
 
@@ -9,7 +8,7 @@ Security   -> Ghidra, IDA (someone give me pro), Cheat Engine, Win32 API
 
 Full Stack -> ReactJS, Springboot, (No)SQL Practices
 
-# Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
+## Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 
 ---
 ![](https://komarev.com/ghpvc/?username=justinangara)
@@ -31,14 +30,14 @@ I'm a graduate from a coding boot camp, a former AP Computer Science teacher ass
 
 Some background knowledge: I was a competitor for multiple hackathons, took some classes on front-end/back-end development at UC Berkeley Extension & UCLA Extension, and was a former AVID, Math, and Computer Science tutor. 
 
-## 🔗 Connect with Me
+### 🔗 Connect with Me
 - [LinkedIn – Justin Angara](https://www.linkedin.com/in/JustinAngara)  
 - [GitHub – Justin Angara](https://github.com/JustinAngara)  
 - [YouTube Channel](https://www.youtube.com/channel/UCtimiRO-DciauBTthTVYChA)  
 - [Personal Website](https://justinangara.github.io/personal-website/)  
 
 
-# 📊 GitHub Stats:
+### 📊 GitHub Stats:
 ![](https://nirzak-streak-stats.vercel.app/?user=JustinAngara&theme=dark&hide_border=false)<br/>
 
 ---
