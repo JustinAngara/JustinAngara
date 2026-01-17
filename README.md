@@ -6,7 +6,7 @@ Systems    -> c/c++ windows, java
 
 Security   -> Ghidra, IDA (someone give me pro), Cheat Engine, Win32 API
 
-Full Stack -> ReactJS, Springboot, (No)SQL Practices
+Full Stack -> TypeScript, ReactJS, Springboot, (No)SQL Security Practices
 
 ## Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 
@@ -17,7 +17,7 @@ Full Stack -> ReactJS, Springboot, (No)SQL Practices
 I've been coding since I was 13 (2019) with Java and self-studied for 2 years (though my first program ever made was back in 2015 p.s. check out my first minecraft mod somewhere in my repos!). I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
 This was the first time I had received formal instruction. 
 
-### Present (University of Wisconsin-Madison)
+### University of Wisconsin-Madison
 Now I work at a different startup, AI & Prototyping Engineer, contracting for a telecom industry client, am still working on coding projects, and currently exploring different avenues.     
 
 * 🌍  I'm based in Illinois (Chicago) / Wisconsin (Madison)
