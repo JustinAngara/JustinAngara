@@ -38,8 +38,7 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 
 
 ### 📊 GitHub Stats:
-![](https://nirzak-streak-stats.vercel.app/?user=JustinAngara&theme=dark&hide_border=false)<br/>
-
+[![GitHub Streak](https://streak-stats.demolab.com?user=justinangara&exclude_days=Sun%2CSat&excludeDaysLabel=EB5454)](https://git.io/streak-stats)
 ---
 [![GitHub Streak](https://streak-stats.demolab.com?user=justinangara)](https://git.io/streak-stats)
 
