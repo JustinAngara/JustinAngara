@@ -10,7 +10,7 @@ Full Stack -> TypeScript, ReactJS, Springboot, (No)SQL Security Practices
 ## Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 
 ---
-![](https://komarev.com/ghpvc/?username=justinangara)
+![](https://komarev.com/ghpvc/?username=justinangara&color=B897FF)
 ---
 
 I've been coding since I was 13 (2019) with Java and self-studied for 2 years (though my first program ever made was back in 2015 p.s. check out my first minecraft mod somewhere in my repos!). I took AP Computer Science my Sophomore year and got a 5 on the AP Exam. 
