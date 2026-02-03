@@ -37,7 +37,8 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 
 
 ### 📊 GitHub Stats:
-[![GitHub Streak](https://github-readme-stats-fast.vercel.app/api/streak?username=JustinAngara&theme=shades-of-purple)
+![GitHub Streak](https://github-readme-stats-fast.vercel.app/api/streak?username=JustinAngara&theme=shades-of-purple)
+
 ![GitHub Stats](https://github-readme-stats-fast.vercel.app/api/top-langs/?username=JustinAngara&layout=compact&theme=shades-of-purple)
 
 
