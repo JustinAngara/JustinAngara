@@ -1,0 +1,36 @@
+{
+  "generated_utc": "2026-02-13 19:29 UTC",
+  "languages": {
+    "C": {
+      "code": 24400,
+      "comments": 7054,
+      "blanks": 5219
+    },
+    "C++": {
+      "code": 143063,
+      "comments": 51659,
+      "blanks": 18142
+    },
+    "Java": {
+      "code": 33260,
+      "comments": 9893,
+      "blanks": 9181
+    },
+    "JavaScript": {
+      "code": 56969,
+      "comments": 9448,
+      "blanks": 3884
+    },
+    "TypeScript": {
+      "code": 30888,
+      "comments": 14326,
+      "blanks": 5360
+    }
+  },
+  "grand": {
+    "code": 288580,
+    "comments": 92380,
+    "blanks": 41786,
+    "lines": 422746
+  }
+}
