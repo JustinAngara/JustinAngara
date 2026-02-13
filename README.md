@@ -42,3 +42,5 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 ![GitHub Stats](https://github-readme-stats-fast.vercel.app/api/top-langs/?username=JustinAngara&layout=compact&theme=shades-of-purple)
 
 
+## LOC
+[View LOC summary](./LOC_SUMMARY.md)
