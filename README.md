@@ -39,4 +39,4 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 ### 📊 GitHub Stats:
 ![GitHub Streak](https://github-readme-stats-fast.vercel.app/api/streak?username=JustinAngara&theme=shades-of-purple)
 
-<img src="loc_card.svg" alt="LOC card" />
+![LOC Card](https://raw.githubusercontent.com/JustinAngara/JustinAngara/main/loc_card.svg?sanitize=true&v=2)
