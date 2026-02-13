@@ -1,4 +1,4 @@
-name: LOC across all repos
+name: LOC card (C/C++/Java/JS/TS)
 
 on:
   workflow_dispatch:
@@ -15,60 +15,43 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
-      - name: Install tools (gh + jq + git + python)
+      - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y gh jq git python3
+          sudo apt-get install -y gh jq git python3 cargo
 
-      - name: Install tokei (reliable)
+      - name: Install tokei
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cargo
           cargo install tokei --locked
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
           tokei --version
 
-      - name: Aggregate LOC across repos
+      - name: Scan repos and generate card
         env:
           GH_TOKEN: ${{ secrets.LOC_PAT }}
         run: |
           set -euo pipefail
-
-          # Sanity: prove auth works
           gh auth status
 
-          # Create summary header
-          rm -f LOC_SUMMARY.md
-          {
-            echo "# LOC summary"
-            echo ""
-            echo "_Generated: $(date -u '+%Y-%m-%d %H:%M UTC')_"
-            echo ""
-          } >> LOC_SUMMARY.md
-
-          # Workspace for clones
           rm -rf _repos
           mkdir -p _repos
-          cd _repos
 
-          # List repos (skip forks + archived)
+          # list repos (skip forks + archived)
           gh repo list --limit 2000 --json nameWithOwner,isFork,isArchived \
             --jq '.[] | select(.isFork==false and .isArchived==false) | .nameWithOwner' \
-            > repos.txt
+            > _repos/repos.txt
 
-          # Clone each repo shallow and run tokei JSON
+          # clone + tokei json per repo
           while IFS= read -r repo; do
             echo "==> $repo"
-            dir="$(echo "$repo" | tr '/' '__')"
+            dir="_repos/$(echo "$repo" | tr '/' '__')"
             rm -rf "$dir"
 
-            # Shallow clone with gh
             if ! gh repo clone "$repo" "$dir" -- --depth 1 >/dev/null 2>&1; then
               echo "   (skip) clone failed: $repo"
               continue
             fi
 
-            # Count LOC, excluding common generated/vendor dirs
             tokei "$dir" \
               --exclude "$dir/.git" \
               --exclude "$dir/node_modules" \
@@ -84,19 +67,27 @@ jobs:
               --exclude "$dir/third_party" \
               --exclude "$dir/.venv" \
               --exclude "$dir/venv" \
-              --output json > "${dir}.json" || true
+              --output json > "${dir}.tokei.json" || true
+          done < _repos/repos.txt
 
-          done < repos.txt
-
-          cd ..
-
-          # Combine JSON results into one markdown
+          # combine + filter to only: C, C++, Java, JavaScript, TypeScript
           python3 - << 'PY'
-          import json, glob
-          from collections import defaultdict
+          import json, glob, datetime
 
-          agg = defaultdict(lambda: {"blanks":0,"code":0,"comments":0,"lines":0})
-          for fp in glob.glob("_repos/*.json"):
+          # tokei language labels vary; map into your buckets
+          def bucket(lang: str):
+            # normalize common variations
+            if lang == "C": return "C"
+            if lang in ("C Header",): return "C"          # treat C headers as C
+            if lang in ("C++", "C++ Header"): return "C++" # treat headers as C++
+            if lang == "Java": return "Java"
+            if lang == "JavaScript": return "JavaScript"
+            if lang == "TypeScript": return "TypeScript"
+            return None
+
+          totals = {k: {"code":0,"comments":0,"blanks":0} for k in ["C","C++","Java","JavaScript","TypeScript"]}
+
+          for fp in glob.glob("_repos/*.tokei.json"):
             try:
               data = json.load(open(fp, "r", encoding="utf-8"))
             except Exception:
@@ -104,42 +95,117 @@ jobs:
             for lang, v in data.items():
               if lang == "Total":
                 continue
-              agg[lang]["blanks"]   += int(v.get("blanks", 0))
-              agg[lang]["code"]     += int(v.get("code", 0))
-              agg[lang]["comments"] += int(v.get("comments", 0))
-              agg[lang]["lines"]    += int(v.get("lines", 0))
+              b = bucket(lang)
+              if not b:
+                continue
+              totals[b]["code"] += int(v.get("code", 0))
+              totals[b]["comments"] += int(v.get("comments", 0))
+              totals[b]["blanks"] += int(v.get("blanks", 0))
 
-          items = sorted(agg.items(), key=lambda kv: kv[1]["code"], reverse=True)
+          # compute grand totals
+          grand = {"code":0,"comments":0,"blanks":0}
+          for k in totals:
+            for f in grand:
+              grand[f] += totals[k][f]
+          grand["lines"] = grand["code"] + grand["comments"] + grand["blanks"]
 
-          lines_total = sum(v["lines"] for _, v in items)
-          code_total  = sum(v["code"] for _, v in items)
-          comm_total  = sum(v["comments"] for _, v in items)
-          blank_total = sum(v["blanks"] for _, v in items)
+          # write machine-readable summary
+          out = {
+            "generated_utc": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            "languages": totals,
+            "grand": grand
+          }
+          with open("loc_summary.json", "w", encoding="utf-8") as f:
+            json.dump(out, f, indent=2)
 
-          out = []
-          out.append("## Totals (all non-fork, non-archived repos)")
-          out.append("")
-          out.append(f"- **Lines**: {lines_total:,}")
-          out.append(f"- **Code**: {code_total:,}")
-          out.append(f"- **Comments**: {comm_total:,}")
-          out.append(f"- **Blanks**: {blank_total:,}")
-          out.append("")
-          out.append("## By language (top 25 by code)")
-          out.append("")
-          out.append("| Language | Code | Comments | Blanks | Lines |")
-          out.append("|---|---:|---:|---:|---:|")
-          for lang, v in items[:25]:
-            out.append(f"| {lang} | {v['code']:,} | {v['comments']:,} | {v['blanks']:,} | {v['lines']:,} |")
+          # build a simple SVG "card"
+          # (no external assets; GitHub renders SVG in README fine)
+          def fmt(n): return f"{n:,}"
 
-          with open("LOC_SUMMARY.md", "a", encoding="utf-8") as f:
-            f.write("\n".join(out) + "\n")
+          title = "Handwritten LOC (C/C++/Java/JS/TS)"
+          subtitle = f"Generated {out['generated_utc']}"
+          lines = [
+            ("C", totals["C"]),
+            ("C++", totals["C++"]),
+            ("Java", totals["Java"]),
+            ("JavaScript", totals["JavaScript"]),
+            ("TypeScript", totals["TypeScript"]),
+          ]
+
+          # layout
+          w, h = 860, 260
+          x0, y0 = 26, 62
+          row_h = 28
+
+          svg = []
+          svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">')
+          svg.append('<defs>')
+          svg.append('<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">'
+                     '<feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.18"/>'
+                     '</filter>')
+          svg.append('</defs>')
+
+          # card bg
+          svg.append(f'<rect x="14" y="14" width="{w-28}" height="{h-28}" rx="18" fill="#0d1117" filter="url(#shadow)"/>')
+          svg.append(f'<rect x="14" y="14" width="{w-28}" height="{h-28}" rx="18" fill="none" stroke="#30363d"/>')
+
+          # title
+          svg.append(f'<text x="36" y="54" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="20" fill="#e6edf3" font-weight="700">{title}</text>')
+          svg.append(f'<text x="36" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">{subtitle}</text>')
+
+          # headers
+          svg.append(f'<text x="{x0}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">Language</text>')
+          svg.append(f'<text x="{x0+300}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">Code</text>')
+          svg.append(f'<text x="{x0+440}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">Comments</text>')
+          svg.append(f'<text x="{x0+600}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">Blanks</text>')
+          svg.append(f'<text x="{x0+740}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="12" fill="#8b949e">Total</text>')
+
+          y = y0 + 22
+          for name, v in lines:
+            total = v["code"] + v["comments"] + v["blanks"]
+            svg.append(f'<text x="{x0}" y="{y}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                       f'font-size="14" fill="#e6edf3">{name}</text>')
+            svg.append(f'<text x="{x0+300}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                       f'font-size="14" fill="#e6edf3">{fmt(v["code"])}</text>')
+            svg.append(f'<text x="{x0+440}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                       f'font-size="14" fill="#e6edf3">{fmt(v["comments"])}</text>')
+            svg.append(f'<text x="{x0+600}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                       f'font-size="14" fill="#e6edf3">{fmt(v["blanks"])}</text>')
+            svg.append(f'<text x="{x0+740}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                       f'font-size="14" fill="#e6edf3">{fmt(total)}</text>')
+            y += row_h
+
+          # grand total
+          svg.append(f'<line x1="36" y1="{y+6}" x2="{w-36}" y2="{y+6}" stroke="#30363d"/>')
+          svg.append(f'<text x="{x0}" y="{y+30}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
+                     f'font-size="14" fill="#e6edf3" font-weight="700">TOTAL</text>')
+          svg.append(f'<text x="{x0+300}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["code"])}</text>')
+          svg.append(f'<text x="{x0+440}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["comments"])}</text>')
+          svg.append(f'<text x="{x0+600}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["blanks"])}</text>')
+          svg.append(f'<text x="{x0+740}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
+                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["lines"])}</text>')
+
+          svg.append("</svg>")
+
+          with open("loc_card.svg", "w", encoding="utf-8") as f:
+            f.write("\n".join(svg))
           PY
 
-      - name: Commit LOC_SUMMARY.md
+      - name: Commit card + summary
         run: |
           set -euo pipefail
           git config user.name "loc-bot"
           git config user.email "loc-bot@users.noreply.github.com"
-          git add LOC_SUMMARY.md
-          git commit -m "Update LOC summary" || exit 0
+          git add loc_card.svg loc_summary.json
+          git commit -m "Update LOC card" || exit 0
           git push

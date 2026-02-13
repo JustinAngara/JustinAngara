@@ -43,4 +43,4 @@ Some background knowledge: I was a competitor for multiple hackathons, took some
 
 
 ## LOC
-[View LOC summary](./LOC_SUMMARY.md)
+<img src="loc_card.svg" alt="LOC card" />
