@@ -76,10 +76,9 @@ jobs:
 
           # tokei language labels vary; map into your buckets
           def bucket(lang: str):
-            # normalize common variations
             if lang == "C": return "C"
-            if lang in ("C Header",): return "C"          # treat C headers as C
-            if lang in ("C++", "C++ Header"): return "C++" # treat headers as C++
+            if lang in ("C Header",): return "C"
+            if lang in ("C++", "C++ Header"): return "C++"
             if lang == "Java": return "Java"
             if lang == "JavaScript": return "JavaScript"
             if lang == "TypeScript": return "TypeScript"
@@ -118,82 +117,91 @@ jobs:
           with open("loc_summary.json", "w", encoding="utf-8") as f:
             json.dump(out, f, indent=2)
 
-          # build a simple SVG "card"
-          # (no external assets; GitHub renders SVG in README fine)
+          # build a cleaner SVG card with purple theme
           def fmt(n): return f"{n:,}"
 
-          title = "Handwritten LOC (C/C++/Java/JS/TS)"
-          subtitle = f"Generated {out['generated_utc']}"
+          # language color dots
+          colors = {
+            "C": "#555555",
+            "C++": "#f34b7d",
+            "Java": "#b07219",
+            "JavaScript": "#f1e05a",
+            "TypeScript": "#3178c6",
+          }
+
           lines = [
-            ("C", totals["C"]),
-            ("C++", totals["C++"]),
-            ("Java", totals["Java"]),
-            ("JavaScript", totals["JavaScript"]),
-            ("TypeScript", totals["TypeScript"]),
+            ("C", totals["C"], colors["C"]),
+            ("C++", totals["C++"], colors["C++"]),
+            ("Java", totals["Java"], colors["Java"]),
+            ("JavaScript", totals["JavaScript"], colors["JavaScript"]),
+            ("TypeScript", totals["TypeScript"], colors["TypeScript"]),
           ]
 
-          # layout
-          w, h = 860, 260
-          x0, y0 = 26, 62
-          row_h = 28
+          # layout - compact card
+          w, h = 600, 280
+          padding = 30
+          row_h = 32
+          start_y = 40
 
           svg = []
           svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">')
+          
+          # gradient background
           svg.append('<defs>')
-          svg.append('<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">'
-                     '<feDropShadow dx="0" dy="2" stdDeviation="6" flood-opacity="0.18"/>'
-                     '</filter>')
+          svg.append('<linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">')
+          svg.append('<stop offset="0%" style="stop-color:#2d2d44;stop-opacity:1" />')
+          svg.append('<stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:1" />')
+          svg.append('</linearGradient>')
+          svg.append('<filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">')
+          svg.append('<feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>')
+          svg.append('</filter>')
           svg.append('</defs>')
 
-          # card bg
-          svg.append(f'<rect x="14" y="14" width="{w-28}" height="{h-28}" rx="18" fill="#0d1117" filter="url(#shadow)"/>')
-          svg.append(f'<rect x="14" y="14" width="{w-28}" height="{h-28}" rx="18" fill="none" stroke="#30363d"/>')
+          # card background
+          svg.append(f'<rect width="{w}" height="{h}" fill="url(#grad)" rx="12"/>')
+          svg.append(f'<rect x="1" y="1" width="{w-2}" height="{h-2}" rx="11" fill="none" stroke="#4a4a6a" stroke-width="1" opacity="0.3"/>')
 
-          # title
-          svg.append(f'<text x="36" y="54" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="20" fill="#e6edf3" font-weight="700">{title}</text>')
-          svg.append(f'<text x="36" y="78" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">{subtitle}</text>')
+          y = start_y
 
-          # headers
-          svg.append(f'<text x="{x0}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">Language</text>')
-          svg.append(f'<text x="{x0+300}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">Code</text>')
-          svg.append(f'<text x="{x0+440}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">Comments</text>')
-          svg.append(f'<text x="{x0+600}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">Blanks</text>')
-          svg.append(f'<text x="{x0+740}" y="{y0}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="12" fill="#8b949e">Total</text>')
-
-          y = y0 + 22
-          for name, v in lines:
-            total = v["code"] + v["comments"] + v["blanks"]
-            svg.append(f'<text x="{x0}" y="{y}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                       f'font-size="14" fill="#e6edf3">{name}</text>')
-            svg.append(f'<text x="{x0+300}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                       f'font-size="14" fill="#e6edf3">{fmt(v["code"])}</text>')
-            svg.append(f'<text x="{x0+440}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                       f'font-size="14" fill="#e6edf3">{fmt(v["comments"])}</text>')
-            svg.append(f'<text x="{x0+600}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                       f'font-size="14" fill="#e6edf3">{fmt(v["blanks"])}</text>')
-            svg.append(f'<text x="{x0+740}" y="{y}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                       f'font-size="14" fill="#e6edf3">{fmt(total)}</text>')
+          # each language row
+          for name, v, color in lines:
+            total = v["code"] + v["comments"]
+            if total == 0:
+              continue
+              
+            # language dot + name
+            svg.append(f'<circle cx="{padding+6}" cy="{y-4}" r="5" fill="{color}"/>')
+            svg.append(f'<text x="{padding+20}" y="{y}" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+                       f'font-size="15" fill="#e8e8f5" font-weight="500">{name}</text>')
+            
+            # code count (right-aligned)
+            svg.append(f'<text x="{w-padding-120}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+                       f'font-size="15" fill="#a8a8c8" text-anchor="end">{fmt(v["code"])}</text>')
+            
+            # comments count
+            svg.append(f'<text x="{w-padding}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+                       f'font-size="15" fill="#7878a0" text-anchor="end">{fmt(v["comments"])}</text>')
+            
             y += row_h
 
-          # grand total
-          svg.append(f'<line x1="36" y1="{y+6}" x2="{w-36}" y2="{y+6}" stroke="#30363d"/>')
-          svg.append(f'<text x="{x0}" y="{y+30}" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" '
-                     f'font-size="14" fill="#e6edf3" font-weight="700">TOTAL</text>')
-          svg.append(f'<text x="{x0+300}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["code"])}</text>')
-          svg.append(f'<text x="{x0+440}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["comments"])}</text>')
-          svg.append(f'<text x="{x0+600}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["blanks"])}</text>')
-          svg.append(f'<text x="{x0+740}" y="{y+30}" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace" '
-                     f'font-size="14" fill="#e6edf3" font-weight="700">{fmt(grand["lines"])}</text>')
+          # separator line
+          y += 8
+          svg.append(f'<line x1="{padding}" y1="{y}" x2="{w-padding}" y2="{y}" stroke="#4a4a6a" stroke-width="1.5" opacity="0.5"/>')
+          y += 26
+
+          # total row
+          svg.append(f'<text x="{padding}" y="{y}" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+                     f'font-size="16" fill="#f0f0ff" font-weight="700">TOTAL</text>')
+          svg.append(f'<text x="{w-padding-120}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+                     f'font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">{fmt(grand["code"])}</text>')
+          svg.append(f'<text x="{w-padding}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+                     f'font-size="16" fill="#ffb347" text-anchor="end" font-weight="700">{fmt(grand["comments"])}</text>')
+
+          # column headers at top
+          svg.append(f'<text x="{w-padding-120}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+                     f'font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">CODE</text>')
+          svg.append(f'<text x="{w-padding}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+                     f'font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">COMMENTS</text>')
 
           svg.append("</svg>")
 
