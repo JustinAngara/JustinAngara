@@ -137,8 +137,8 @@ jobs:
             ("TypeScript", totals["TypeScript"], colors["TypeScript"]),
           ]
 
-          # layout - compact card
-          w, h = 600, 280
+          # layout - compact card with only code and proportion
+          w, h = 550, 280
           padding = 30
           row_h = 32
           start_y = 40
@@ -168,19 +168,22 @@ jobs:
             total = v["code"] + v["comments"]
             if total == 0:
               continue
+            
+            # calculate proportion based on code only
+            proportion = (v["code"] / grand["code"] * 100) if grand["code"] > 0 else 0
               
             # language dot + name
             svg.append(f'<circle cx="{padding+6}" cy="{y-4}" r="5" fill="{color}"/>')
             svg.append(f'<text x="{padding+20}" y="{y}" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
                        f'font-size="15" fill="#e8e8f5" font-weight="500">{name}</text>')
             
-            # code count (right-aligned)
-            svg.append(f'<text x="{w-padding-120}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+            # code count
+            svg.append(f'<text x="{w-padding-130}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
                        f'font-size="15" fill="#a8a8c8" text-anchor="end">{fmt(v["code"])}</text>')
             
-            # comments count
+            # proportion
             svg.append(f'<text x="{w-padding}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
-                       f'font-size="15" fill="#7878a0" text-anchor="end">{fmt(v["comments"])}</text>')
+                       f'font-size="15" fill="#9d9dbd" text-anchor="end">{proportion:.2f}%</text>')
             
             y += row_h
 
@@ -192,16 +195,18 @@ jobs:
           # total row
           svg.append(f'<text x="{padding}" y="{y}" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
                      f'font-size="16" fill="#f0f0ff" font-weight="700">TOTAL</text>')
-          svg.append(f'<text x="{w-padding-120}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
+          svg.append(f'<text x="{w-padding-130}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
                      f'font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">{fmt(grand["code"])}</text>')
           svg.append(f'<text x="{w-padding}" y="{y}" font-family="\'Consolas\', \'Monaco\', monospace" '
-                     f'font-size="16" fill="#ffb347" text-anchor="end" font-weight="700">{fmt(grand["comments"])}</text>')
+                     f'font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">100.00%</text>')
 
           # column headers at top
-          svg.append(f'<text x="{w-padding-120}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+          svg.append(f'<text x="{padding}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
+                     f'font-size="11" fill="#8888aa" font-weight="600">LANGUAGE</text>')
+          svg.append(f'<text x="{w-padding-130}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
                      f'font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">CODE</text>')
           svg.append(f'<text x="{w-padding}" y="22" font-family="\'Segoe UI\', Roboto, -apple-system, sans-serif" '
-                     f'font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">COMMENTS</text>')
+                     f'font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">PROPORTION</text>')
 
           svg.append("</svg>")
 
