@@ -3,7 +3,7 @@ name: LOC across all repos
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 9 * * 1"  # weekly (Mon 09:00 UTC)
+    - cron: "0 9 * * 1" # weekly (Mon 09:00 UTC)
 
 permissions:
   contents: write
@@ -15,46 +15,60 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
-      - name: Install tokei + gh
+      - name: Install tools (gh + jq + git + python)
         run: |
           sudo apt-get update
-          sudo apt-get install -y gh
-          curl -L https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz
-          sudo mv tokei /usr/local/bin/tokei
+          sudo apt-get install -y gh jq git python3
+
+      - name: Install tokei (reliable)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cargo
+          cargo install tokei --locked
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
           tokei --version
-          gh --version
 
       - name: Aggregate LOC across repos
         env:
           GH_TOKEN: ${{ secrets.LOC_PAT }}
         run: |
           set -euo pipefail
-          rm -f LOC_SUMMARY.md
-          echo "# LOC summary" >> LOC_SUMMARY.md
-          echo "" >> LOC_SUMMARY.md
-          echo "_Generated: $(date -u '+%Y-%m-%d %H:%M UTC')_" >> LOC_SUMMARY.md
-          echo "" >> LOC_SUMMARY.md
 
+          # Sanity: prove auth works
+          gh auth status
+
+          # Create summary header
+          rm -f LOC_SUMMARY.md
+          {
+            echo "# LOC summary"
+            echo ""
+            echo "_Generated: $(date -u '+%Y-%m-%d %H:%M UTC')_"
+            echo ""
+          } >> LOC_SUMMARY.md
+
+          # Workspace for clones
+          rm -rf _repos
           mkdir -p _repos
           cd _repos
 
-          # List your repos (skip forks + archived). Uses GitHub CLI.
-          gh repo list --limit 1000 --json nameWithOwner,isFork,isArchived \
+          # List repos (skip forks + archived)
+          gh repo list --limit 2000 --json nameWithOwner,isFork,isArchived \
             --jq '.[] | select(.isFork==false and .isArchived==false) | .nameWithOwner' \
             > repos.txt
 
-          total_file="../_tokei_total.txt"
-          : > "$total_file"
-
-          # Clone each repo shallow and run tokei with sane ignores
+          # Clone each repo shallow and run tokei JSON
           while IFS= read -r repo; do
             echo "==> $repo"
             dir="$(echo "$repo" | tr '/' '__')"
             rm -rf "$dir"
-            gh repo clone "$repo" "$dir" -- --depth 1 >/dev/null 2>&1 || continue
 
-            # Run tokei, ignoring common generated/vendor dirs
+            # Shallow clone with gh
+            if ! gh repo clone "$repo" "$dir" -- --depth 1 >/dev/null 2>&1; then
+              echo "   (skip) clone failed: $repo"
+              continue
+            fi
+
+            # Count LOC, excluding common generated/vendor dirs
             tokei "$dir" \
               --exclude "$dir/.git" \
               --exclude "$dir/node_modules" \
@@ -68,31 +82,33 @@ jobs:
               --exclude "$dir/.cache" \
               --exclude "$dir/vendor" \
               --exclude "$dir/third_party" \
+              --exclude "$dir/.venv" \
+              --exclude "$dir/venv" \
               --output json > "${dir}.json" || true
+
           done < repos.txt
 
           cd ..
 
-          # Combine JSONs via a tiny python script (no extra deps)
+          # Combine JSON results into one markdown
           python3 - << 'PY'
-          import json, glob, os
+          import json, glob
           from collections import defaultdict
 
-          agg = defaultdict(lambda: {"blanks":0,"code":0,"comments":0,"lines":0,"reports":0})
+          agg = defaultdict(lambda: {"blanks":0,"code":0,"comments":0,"lines":0})
           for fp in glob.glob("_repos/*.json"):
             try:
-              data = json.load(open(fp))
+              data = json.load(open(fp, "r", encoding="utf-8"))
             except Exception:
               continue
-            # tokei json: keys are languages + "Total"
             for lang, v in data.items():
-              if lang == "Total": 
+              if lang == "Total":
                 continue
-              for k in ("blanks","code","comments","lines"):
-                agg[lang][k] += int(v.get(k,0))
-              agg[lang]["reports"] += 1
+              agg[lang]["blanks"]   += int(v.get("blanks", 0))
+              agg[lang]["code"]     += int(v.get("code", 0))
+              agg[lang]["comments"] += int(v.get("comments", 0))
+              agg[lang]["lines"]    += int(v.get("lines", 0))
 
-          # sort by code desc
           items = sorted(agg.items(), key=lambda kv: kv[1]["code"], reverse=True)
 
           lines_total = sum(v["lines"] for _, v in items)
@@ -114,11 +130,14 @@ jobs:
           out.append("|---|---:|---:|---:|---:|")
           for lang, v in items[:25]:
             out.append(f"| {lang} | {v['code']:,} | {v['comments']:,} | {v['blanks']:,} | {v['lines']:,} |")
-          open("LOC_SUMMARY.md","a",encoding="utf-8").write("\n".join(out) + "\n")
+
+          with open("LOC_SUMMARY.md", "a", encoding="utf-8") as f:
+            f.write("\n".join(out) + "\n")
           PY
 
       - name: Commit LOC_SUMMARY.md
         run: |
+          set -euo pipefail
           git config user.name "loc-bot"
           git config user.email "loc-bot@users.noreply.github.com"
           git add LOC_SUMMARY.md
