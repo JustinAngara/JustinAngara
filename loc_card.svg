@@ -12,12 +12,12 @@
 <rect x="1" y="1" width="548" height="278" rx="11" fill="none" stroke="#4a4a6a" stroke-width="1" opacity="0.3"/>
 <circle cx="36" cy="36" r="5" fill="#555555"/>
 <text x="50" y="40" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="15" fill="#e8e8f5" font-weight="500">C</text>
-<text x="390" y="40" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#a8a8c8" text-anchor="end">44,928</text>
+<text x="390" y="40" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#a8a8c8" text-anchor="end">44,935</text>
 <text x="520" y="40" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#9d9dbd" text-anchor="end">14.53%</text>
 <circle cx="36" cy="68" r="5" fill="#f34b7d"/>
 <text x="50" y="72" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="15" fill="#e8e8f5" font-weight="500">C++</text>
-<text x="390" y="72" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#a8a8c8" text-anchor="end">143,068</text>
-<text x="520" y="72" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#9d9dbd" text-anchor="end">46.28%</text>
+<text x="390" y="72" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#a8a8c8" text-anchor="end">143,106</text>
+<text x="520" y="72" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#9d9dbd" text-anchor="end">46.29%</text>
 <circle cx="36" cy="100" r="5" fill="#b07219"/>
 <text x="50" y="104" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="15" fill="#e8e8f5" font-weight="500">Java</text>
 <text x="390" y="104" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#a8a8c8" text-anchor="end">33,260</text>
@@ -32,7 +32,7 @@
 <text x="520" y="168" font-family="'Consolas', 'Monaco', monospace" font-size="15" fill="#9d9dbd" text-anchor="end">9.99%</text>
 <line x1="30" y1="208" x2="520" y2="208" stroke="#4a4a6a" stroke-width="1.5" opacity="0.5"/>
 <text x="30" y="234" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="16" fill="#f0f0ff" font-weight="700">TOTAL</text>
-<text x="390" y="234" font-family="'Consolas', 'Monaco', monospace" font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">309,113</text>
+<text x="390" y="234" font-family="'Consolas', 'Monaco', monospace" font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">309,158</text>
 <text x="520" y="234" font-family="'Consolas', 'Monaco', monospace" font-size="16" fill="#ffd700" text-anchor="end" font-weight="700">100.00%</text>
 <text x="30" y="22" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="11" fill="#8888aa" font-weight="600">LANGUAGE</text>
 <text x="390" y="22" font-family="'Segoe UI', Roboto, -apple-system, sans-serif" font-size="11" fill="#8888aa" text-anchor="end" font-weight="600">CODE</text>
