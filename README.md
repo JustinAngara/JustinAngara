@@ -1,11 +1,5 @@
 ![header](https://capsule-render.vercel.app/api?type=soft&height=350&color=B897FF&text=Justin%20Angara&reversal=true&fontAlign=50&section=header&desc=Software%20Engineer&textBg=false&fontColor=FFFFFF&fontAlignY=50&descAlignY=70)
-## Software Developer 
-
-Systems    -> c/c++ windows, java
-
-Security   -> Ghidra, IDA (someone give me pro), Cheat Engine, Win32 API
-
-Full Stack -> TypeScript, ReactJS, Springboot, (No)SQL Security Practices
+## At PlayStation
 
 ## Double major in Computer Science and Economics Student @ University of Wisconsin-Madison 
 
