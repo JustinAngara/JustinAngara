@@ -1,20 +1,20 @@
 {
-  "generated_utc": "2026-05-18 12:40 UTC",
+  "generated_utc": "2026-05-25 12:39 UTC",
   "languages": {
     "C": {
-      "code": 23675,
-      "comments": 6885,
-      "blanks": 5116
+      "code": 35940,
+      "comments": 11201,
+      "blanks": 7159
     },
     "C++": {
-      "code": 143117,
-      "comments": 51715,
-      "blanks": 18186
+      "code": 182112,
+      "comments": 59853,
+      "blanks": 23504
     },
     "Java": {
-      "code": 33842,
-      "comments": 9978,
-      "blanks": 9339
+      "code": 33936,
+      "comments": 9987,
+      "blanks": 9370
     },
     "JavaScript": {
       "code": 56969,
@@ -28,9 +28,9 @@
     }
   },
   "grand": {
-    "code": 288491,
-    "comments": 92352,
-    "blanks": 41885,
-    "lines": 422728
+    "code": 339845,
+    "comments": 104815,
+    "blanks": 49277,
+    "lines": 493937
   }
 }
